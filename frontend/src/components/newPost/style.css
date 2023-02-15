@@ -1,0 +1,42 @@
+:root{
+    --header: #323948;
+    --blue:#4285F4;
+    --red:#EA4335;
+    --green:#34A853;
+    --yellow:#FBBC05;
+    --gray:#9B9B9B;
+    --deep_gray:#7e7b7b;
+}
+
+.addPost{
+    width: 40%;
+    margin: auto;
+    padding: 2% 5%;
+    text-align: center;
+}
+.addPost .form-img{
+    margin: 5px auto;
+}
+
+.addPost .user{
+    margin:  6% auto;
+}
+
+.addPost form input{
+    margin: 8% 0;
+}
+
+.addPost form img{
+    height: 12rem;
+    width: 12rem;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+
+@media screen and (max-width:1200px){
+    .addPost{
+        width: 90%;
+        margin-top: 4.9rem;
+    }
+}

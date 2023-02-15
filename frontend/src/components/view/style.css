@@ -1,0 +1,82 @@
+
+
+.view{    
+    padding: 3%;
+    background-color: whitesmoke;
+    margin: 2rem 2.5rem;
+    justify-content: space-around;
+}
+
+.view .left h3{
+    margin:0 auto !important;
+}
+
+.view .details{
+    padding: 0 10%;
+}
+.view .details div{
+    margin: .4rem 0;
+}
+
+.view .profile-img{
+    width: 19rem;
+    height: 19rem;
+    border-radius: 50%;
+    object-fit: cover;
+    margin: auto;
+}
+
+.view .left{
+    width: 37%;
+    padding: 2% 3%;
+    background-color: #d3efe2
+}
+
+.view .details .icon{
+    margin-right: .7rem;
+    font-size: 32px;
+}
+
+.view .right{
+    height: 120vh;
+    overflow-y:auto;
+    padding:2%;
+    background-color: #d3efe2;
+    text-align: center;
+    width: 42%;
+}
+.view .right::-webkit-scrollbar{
+    display: none;
+}
+.view .right .post{
+    margin: 1rem auto;
+}
+
+.view .right .temph{
+    margin: 10rem 0;
+    padding: 25% 0;
+    background: white;
+    border-radius: 2rem;
+}
+
+@media screen and (max-width:1200px){
+    .view{
+        padding: 2%;
+        margin: 2rem .5rem;
+        flex-direction: column;
+    }
+    .view .left, .view .right{
+        width: 100%;
+    }
+    .view .details{
+        padding: 0 18%;
+    }
+    .view .right .posts{
+        margin: 1.4rem 0;
+        padding: 0 1% !important;
+    }
+    .view .right{
+        margin-top: 2.5rem;
+        padding:7% 2%;
+    }
+}

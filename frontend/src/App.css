@@ -1,0 +1,135 @@
+*{
+  padding: 0;
+  margin: 0;
+}
+
+h1, h2, h3, h4, h5, h6, p, a{
+  margin-bottom: 0 !important;
+}
+
+body{
+  padding-top: 6.5rem;
+}
+
+hr{
+  margin:.4rem 0 !important;
+}
+
+.card{
+  border: none;
+}
+
+.heading{
+  font-size: 33px !important;
+}
+
+body{
+  background-color: #d3efe2!important;
+}
+
+.us{
+    width: 19%;
+}
+
+:root{
+  --header: #323948;
+  --blue:#4285F4;
+  --red:#EA4335;
+  --green:#34A853;
+  --yellow:#FBBC05;
+  --gray:#9B9B9B;
+  --deep_gray:#7e7b7b;
+  --bg:#d3efe2;
+}
+
+  /*************************** COLORS  ***************************/
+.y{
+  color: var(--yellow);
+}
+.b{
+  color: var(--blue);
+}
+.g{
+  color: var(--green);
+}
+.r{
+  color: var(--red);
+}
+
+.gr{
+  color: var(--gray) !important;
+}
+
+.deep-gr{
+  color: var(--deep_gray);
+}
+
+
+  /******** UTILIS... *****************/
+.point{
+  cursor: pointer;
+}
+body ::-webkit-scrollbar{
+  display: none;
+}
+.icon{
+  font-size: 26px;
+  cursor: pointer;
+}
+.none{
+  display: none;
+}
+
+
+  /*********** user-MODAL ************/
+
+.user-modal .user{
+  padding: 3px;
+  background: #d3efe2;
+  width: 70%;
+  margin: .7rem 1rem;
+  transition: .4s all ease-in-out;
+}
+
+.user-modal .user:hover{
+  transform: translateX(2rem);
+}
+
+
+  /*********** COMMENT-MODAL ************/
+.comment-modal{
+  width: 100% !important;
+}
+.comment-modal-item .user{
+  color: rgb(88, 88, 88);
+  margin-right: 1rem;
+}
+
+.comment-modal .com-user{
+  margin: .6rem 0;
+}
+.comment-modal .icon{
+  font-size: 30px !important;
+}
+
+    /************ LOADER  *******/
+.loader{
+  margin: 8rem 0;
+  text-align: center;
+  color: midnightblue;
+}
+.loader img{
+  margin:-12rem 0;
+}
+
+@media screen and (max-width:1220px) {
+  .loader img{
+    margin:-3rem !important;
+    width: 100%;
+  }
+  .tooltip{
+    display: none !important;
+  }
+}
+
+

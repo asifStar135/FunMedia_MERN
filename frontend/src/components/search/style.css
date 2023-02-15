@@ -1,0 +1,68 @@
+
+:root{
+    --header: #323948;
+    --blue:#4285F4;
+    --red:#EA4335;
+    --green:#34A853;
+    --yellow:#FBBC05;
+    --gray:#9B9B9B;
+    --deep_gray:#7e7b7b;
+}
+
+.search{
+    width: 40%;
+    margin: 1.3rem auto;
+    padding: 2% 5%;
+    text-align: center;
+}
+
+.search .user{
+    margin:6% auto;
+}
+
+.search .users .user:hover{
+    transform: translateX(1.5rem);
+}
+
+.search .users .user{
+    margin: 6%;
+    padding: 5px;
+    background-color:#bfe1c6 ;
+    transition: .3s all ease-in;
+    width: 80%;
+}
+
+input{
+    margin: 6% 0;
+}
+
+.users{
+    padding: 4%;
+    background-color: #e8f3ee !important;
+    max-height: 70vh;
+    min-height: 30vh;
+    overflow-y: auto;
+    border: none;
+}
+.users .h{
+    margin: auto 0 !important;
+}
+.user h4{
+    transition: .4s all;
+}
+.user h4:hover{
+    color: rgb(91, 91, 91);
+}
+
+.users::-webkit-scrollbar{
+    display: none;
+}
+
+@media screen and (max-width:1200px){
+    .search{
+        width: 90%;
+    }
+    .search .heading{
+        font-size: 30px !important;
+    }
+}

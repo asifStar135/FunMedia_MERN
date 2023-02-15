@@ -1,0 +1,148 @@
+
+
+.account{
+    padding: 1% 3%;
+}
+
+.profile{
+    padding: 2.3% 5%;
+}
+
+.account .profile h3{
+    margin:.5rem auto !important;
+}
+
+.account .profile-img{
+    width: 19rem;
+    height: 19rem;
+    border-radius: 50%;
+    object-fit: cover;
+    margin: auto;
+}
+
+.account .left{
+    width: 37%;
+    padding: 2% 3%;
+    background-color: #d3efe2
+}
+.account .details .icon{
+    margin-right: .7rem;
+    font-size: 32px;
+}
+
+.account .details div{
+    margin: .4rem 0 !important;
+}
+
+.left .details{
+    padding: 0 14%;
+}
+.account .right{
+    padding: 2% 5%;
+    background-color: #d3efe2;
+}
+.account .right .btn{
+    width: 81% !important;
+    margin: 1.3rem auto !important;
+    transition: .3s all ease-in-out;
+}
+.account .right .controls{
+    text-align: center;
+}
+.account .right .heading{
+    margin: 2.8rem auto;
+}
+
+.showPosts{
+    padding: 2% 6%;
+    margin-top: 2.5rem;
+}
+
+.account .showPosts .over{
+    height: 110vh;
+    overflow-y: auto;
+    padding: 1rem;
+    margin-top: 1.5rem;
+    background-color: #d3efe2;
+    border-radius: 15px;
+}
+.account .showPosts .over::-webkit-scrollbar{
+    display: none;
+}
+
+.show .myPosts, .show .savedPosts{
+    background-color: #d3efe2;
+    padding: 2% 4%;
+    border-radius: 15px;
+    height: 120vh;
+    overflow-y: auto;
+    width:45%;
+}
+
+.show .d{
+    border: 1px solid darkgray;
+    margin: 0 1rem ;
+}
+
+.showPosts h3{
+    margin: 1.5rem auto !important;
+    text-align: center;
+}
+
+.showPosts .post{
+    margin: 2rem 0;
+}
+
+.account .btn-group{
+    display: none;
+}
+
+.account .temp{
+    padding: 12rem 1rem !important;
+    background-color: white;
+    border-radius: 20px;
+}
+
+
+@media screen and (max-width:1200px){
+    .account{
+        padding: 1.3%;
+    }
+    .account .profile{
+        padding: 2%;
+        flex-direction: column !important;
+    }
+    .account .left,.account .right{
+        width: 100% !important;
+        margin: 1rem 0 !important;
+    }
+    .account .btn-group{
+        display: inline-block !important;
+    }
+    .account .showPosts{
+        text-align: center !important;
+    }
+    .showPosts .show{
+        padding: 1%;
+        border-radius: 15px;
+        margin: 3% 0;
+    }
+    .showPosts{
+        padding: 1% !important;
+    }
+    .myPosts, .savedPosts{
+        width: 100% !important ;
+        height: auto !important;
+        padding: 3% !important;
+    }
+    .account .right .heading{
+        margin: 1rem auto;
+    }
+    .account .right .btn{
+        width: 60% !important;
+        margin: 1rem auto !important;
+    }
+    .account .details{
+        padding: 3% 20%;
+    }
+}

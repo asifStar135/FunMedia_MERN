@@ -1,0 +1,18 @@
+.user .user-img{
+    width: 3rem;
+    height: 3rem;
+    border-radius:50%;
+    object-fit: cover;
+    margin-right:.5rem;
+}
+
+.user{
+    border: none !important;
+    border-radius: 25px;
+}
+.user .icon{
+    margin: 0 .3rem;
+}
+.user .nav-link:hover{
+    color: rgb(144, 142, 142);
+}

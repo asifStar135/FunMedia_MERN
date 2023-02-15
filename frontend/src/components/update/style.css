@@ -1,0 +1,29 @@
+.update{
+    padding: 2% 3%;
+    width: 40%;
+    margin: 1rem auto;
+    text-align: center;
+}
+.update .update-form{
+    margin: 1rem 0;
+}
+.update a{
+    width: 35%;
+    margin: auto;
+}
+
+.update-form img{
+    width: 12rem;
+    height: 12rem;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+@media screen and (max-width:1200px) {
+    .update{
+        width: 86%;
+    }
+    .update a{
+        width: 50%;
+    }
+}

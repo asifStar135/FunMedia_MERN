@@ -1,0 +1,38 @@
+.register{
+    width: 40%;
+    margin: 1rem auto;
+    padding: 1rem 3rem;
+    text-align: center;
+}
+
+.reg-form{
+    margin-top: 1.4rem;
+}
+
+.register .nav-link{
+    width: 52%;
+    margin: 0.4rem auto !important;
+}
+
+.register .reg-form img{
+    height: 10rem;
+    width: 10rem;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 5%;
+}
+
+.register .nav-link:hover{
+    color: rgb(67, 65, 65) !important;
+}
+
+
+@media screen and (max-width:1200px) {
+    .register{
+        width: 86%;
+        padding: 2rem 2.5rem;
+    }
+    .register .nav-link{
+        width: 90%;
+    }
+}

@@ -1,0 +1,72 @@
+:root{
+    --header: #323948;
+    --blue:#4285F4;
+    --red:#EA4335;
+    --green:#34A853;
+    --yellow:#FBBC05;
+    --gray:#9B9B9B;
+    --deep_gray:#7e7b7b;
+}
+.navbar .nav-link{    
+    padding: 3px !important;
+    margin: 0.3rem 3rem !important;
+}
+
+.nav-link .icon{
+    font-size: 30px !important;
+    transition: .5s all ease-in-out;
+}
+.navbar .nav-link h3{
+    display: none;
+}
+.nav-link .icon:hover{
+    transform: rotate(20deg);
+    font-size: 28px !important;
+}
+
+.offcanvas{
+    background-color: #212529 !important;
+}
+
+.navbar span {
+    font-size: 30px;
+}
+.navbar-toggler{
+    filter: invert(1);
+}
+.btn-close{
+    filter: invert(1);
+}
+
+.navbar span{
+    font-size: 34px;
+}
+.navbar{
+  padding-left: 3rem !important;
+}
+.active-link{
+    color: #ffffffb5 !important;
+  }
+
+@media screen and (max-width:1200px){
+    .navbar-nav .nav-link h3{
+        display: block;
+        color: #c4c4c4;
+        margin-left: 1rem !important;
+    }
+    .navbar-nav .nav-link{
+        font-size: 35px !important;
+    }
+    .navbar{
+        padding: .6rem 1rem !important;
+    }
+    .navbar-brand{
+        width: 60%;
+    }
+    .logo-img{
+        width: 26% !important;
+    }
+    .offcanvas-end{
+        width: 280px !important;
+    }
+}

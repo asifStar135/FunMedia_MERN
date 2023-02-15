@@ -1,0 +1,29 @@
+.login{
+    width: 36%;
+    margin: 1rem auto;
+    padding: 1rem 5rem;
+    text-align: center;
+}
+
+.login form{
+    margin-top: 1.4rem;
+}
+
+.login .nav-link{
+    width: 89%;
+    margin: 0.4rem auto !important;
+}
+.login .nav-link:hover{
+    color: rgb(67, 65, 65) !important;
+}
+
+@media screen and (max-width:1200px) {
+    .login{
+        width: 86%;
+        padding: 5% 10%;
+        margin:30% auto;
+    }
+    .login .nav-link{
+        width: 100%;
+    }
+}

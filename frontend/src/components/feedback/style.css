@@ -1,0 +1,15 @@
+.feedback{
+    width: 40%;
+    margin: 1.3rem auto;
+    text-align: center !important;
+    padding: 2% 3.5%;
+}
+.feedback .user{
+    margin: .4rem auto;
+}
+
+@media screen and (max-width:1200px) {
+    .feedback{
+        width: 86%;
+    }
+}
