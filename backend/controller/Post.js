@@ -211,36 +211,36 @@ exports.commentOnPost = async(req, res) =>{
 exports.deleteComment = async(req, res) =>{
     try {
         const {commentid} = req.body; //  THE COMMENT ID TO DELETE
-        if(commentid == null){
+        if(commentid == null){ //  not Found..!
             return res.status(400).json({
                 message:"Comment is not defined...!"
             })
         }
         
-        const post = await Post.findById(req.params.id);  //  
+        const post = await Post.findById(req.params.id);  //   getting the post where the comment is, by "params.id"
         if(!post) return res.status(404).json({
             message:"post not found...!"
         })
 
         let comment, ind = -1;
         for(let i = 0; i < post.comments.length; i++){
-            if(post.comments[i].id == commentid){
+            if(post.comments[i].id == commentid){  //  finding the particular comment int the post
                 comment = post.comments[i];
                 ind = i;
                 break;
             }
         }
-        if(ind == -1){
+        if(ind == -1){  //  comment id not found..
             return res.status(404).json({
                 message:"Comment not found...!"
             })
         }
-
+// checking the possibility to delete - the user is the comment owner  ||  the user is the owner of the post
         if(comment.user.toString() == req.user._id.toString() || post.owner.toString() == req.user._id.toString()){
-            post.comments.splice(ind, 1);
-            await post.save();
+            post.comments.splice(ind, 1); //  removed..
+            await post.save(); //  saved the post
         }
-        else{
+        else{  //  not possible !
             return res.json(400).json({
                 message:"Comment can't be deleted...!"
             })
@@ -258,32 +258,33 @@ exports.deleteComment = async(req, res) =>{
 
 exports.getAllPosts = async(req, res) =>{
     try{
-        const user = await User.findById(req.user._id).populate("followings");
+        const user = await User.findById(req.user._id).populate("followings");  //  getting the logged in user...
 
+        //  alternate way...
         // let allPosts = await Post.find({
         //     owner: {
         //       $in: user.followings,
         //     },
         //   }).populate("owner likes comments.user");
 
-        let allPosts = [];
-
-        for(let i = 0; i < user.posts.length; i++){
+        let allPosts = [];  //  to store the posts...
+        for(let i = 0; i < user.posts.length; i++){ //  getting the posts of current user...
             const p = await Post.findById(user.posts[i]).populate("owner likes comments.user");
             allPosts.push(p);
         }
-
+        //   getting the posts of followings of current user...
         for(let i = 0; i < user.followings.length; i++){
             for(let j = 0; j < user.followings[i].posts.length; j++){
                 const p = await Post.findById(user.followings[i].posts[j]).populate("owner likes comments.user");
-                allPosts.push(p);
+                allPosts.push(p);  //  adding the post to that array...
             }
         }
-
+        //  sorting the array randomly...
         allPosts.sort((a,b) =>{
             return Math.random() - 0.6;
         })
-
+        
+        //  retunred as Json..
         res.status(200).json({
             message:"All posts fetched...!",
             allPosts
