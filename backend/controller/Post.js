@@ -4,19 +4,21 @@ const cloudinary = require("cloudinary");
 
 exports.createPost = async(req, res) =>{
     try {
-        const user = req.user;
+        const user = req.user; // the user, owner of the new post..!
 
-        const {image, caption} = req.body;
+        const {image, caption} = req.body; //  getting the data to post !
         if(!image){
             return res.status(400).json({
                 message:"Post can't be empty...!"
             })
         }
-        const newCloud = await cloudinary.v2.uploader.upload(image, {folder:"FunMedia_Posts"})
+        const newCloud = await cloudinary.v2.uploader.upload(image, {folder:"FunMedia_Posts"}); // uploading in cloudinary...
 
+        // handling the date for "createdAt" value...
         let time = new Date(Date.now());
         const createDate = time.getDate() + "." + (time.getMonth() + 1) + "." + time.getFullYear();
 
+        //  creating the object "Post"
         const newPost = await Post.create({
             image:{
                 url:newCloud.secure_url,
@@ -29,8 +31,8 @@ exports.createPost = async(req, res) =>{
             createdAt:createDate
         })
 
-        user.posts.push(newPost._id);
-        await user.save();
+        user.posts.push(newPost._id); // pushed to the "posts" of User
+        await user.save(); //  saving the user in DB ...
 
         res.status(201).json({
             message:"new post added...!",
@@ -45,26 +47,27 @@ exports.createPost = async(req, res) =>{
 
 exports.deletePost = async(req, res) =>{
     try {
-        const post = await Post.findById(req.params.id);
-        const user = await User.findById(req.user._id);
+        const post = await Post.findById(req.params.id); // getting post
+        const user = await User.findById(req.user._id); // getting the post to delete
 
         if(!post){
             return res.status(404).json({
                 message:"post not found...!"
             })
         }
+        //  if it's not user's post...
         if(post.owner.toString() != user._id.toString()){
             return res.status(401).json({
                 message:"Post can't be deleted...!"
             })
         }
-
+            //  deleting the post from the user's posts array... 
         let ind = user.posts.indexOf(req.params.id);
         user.posts.splice(ind, 1);
-        await user.save();
+        await user.save(); // saving the user..
 
         const allUsers = await User.find();
-
+        //  we've to delete it from the "saved" section of all the users...
         for(let i = 0; i < allUsers.length; i++){
             let ind = allUsers[i].saved.indexOf(post._id);
             if(ind != -1){
@@ -73,7 +76,8 @@ exports.deletePost = async(req, res) =>{
             }
         }
 
-        await post.remove();
+        await post.remove(); // finally removed from DB
+
         res.status(201).json({
             message:"post deleted...!"
         })
@@ -86,17 +90,17 @@ exports.deletePost = async(req, res) =>{
 
 exports.editPost = async(req, res) =>{
     try {
-        const post = await Post.findById(req.params.id);
-        const {caption} = req.body;
+        const post = await Post.findById(req.params.id); //  the post
+        const {caption} = req.body; //  getting the new caption..
 
-        if(!post || post.owner != req.user._id.toString()){
+        if(!post || post.owner != req.user._id.toString()){ //  if the owner is not the user...
             return res.status(404).json({
                 message:"Post not found...!"
             })
         }
 
-        post.caption = caption;
-        await post.save();
+        post.caption = caption; // updated..
+        await post.save(); //  saved..
 
         res.status(200).json({
             message:"Post is updated...!"
@@ -110,7 +114,7 @@ exports.editPost = async(req, res) =>{
 
 exports.likePost = async(req, res) =>{
     try{
-        const post = await Post.findById(req.params.id);
+        const post = await Post.findById(req.params.id); // like..
         if(!post){
             return res.status(404).json({
                 message:"Post not found...!"
@@ -119,14 +123,15 @@ exports.likePost = async(req, res) =>{
 
         let index = post.likes.indexOf(req.user._id);
         let msg = "post liked...!";
-        if(index == -1){
+
+        if(index == -1){ //  if not liked till
             post.likes.push(req.user._id);
         }
-        else{
+        else{  //  already liked......
             post.likes.splice(index, 1);
             msg = "post liked removed...!"
         }
-        post.save();
+        await post.save(); // saving the post
 
         res.status(200).json({
             message:msg
@@ -141,7 +146,7 @@ exports.likePost = async(req, res) =>{
 
 exports.saveUnsavePost = async(req, res) =>{
     try{
-        const post = await Post.findById(req.params.id);
+        const post = await Post.findById(req.params.id); // getting the post..
         if(!post){
             return res.status(404).json({
                 message:"post not found...!"
@@ -151,14 +156,14 @@ exports.saveUnsavePost = async(req, res) =>{
         let index = req.user.saved.indexOf(post._id);
         let msg = "post is saved...!";
 
-        if(index != -1){
+        if(index != -1){ // if not saved yet...
             req.user.saved.splice(index, 1);
             msg = "post removed from saved...!"
         }
-        else{
+        else{ //  already saved the post
             req.user.saved.push(post._id);
         }
-        req.user.save();
+        await req.user.save(); // saving the user..
         res.status(200).json({
             message:msg
         })
@@ -171,26 +176,27 @@ exports.saveUnsavePost = async(req, res) =>{
 
 exports.commentOnPost = async(req, res) =>{
     try {
-        const post = await Post.findById(req.params.id);
+        const post = await Post.findById(req.params.id); // getting the post..
         if(!post){
             return res.status(404).json({
                 message:"Post not found...!"
             })
         }
 
-        const {comment} = req.body;
+        const {comment} = req.body; // the comment to add...
         if(!comment)
             return res.status(400).json({
                 message:"Comment can't be empty...!"
             })
 
+        // comment added...
         post.comments.push({
             comment:comment,
             user:req.user._id,
             id:post.commentId++
         })
 
-        post.save();
+        await post.save(); //  saving the post
 
         res.status(201).json({
             message:"comment added on post...!"
@@ -204,14 +210,14 @@ exports.commentOnPost = async(req, res) =>{
 
 exports.deleteComment = async(req, res) =>{
     try {
-        const {commentid} = req.body;
+        const {commentid} = req.body; //  THE COMMENT ID TO DELETE
         if(commentid == null){
             return res.status(400).json({
                 message:"Comment is not defined...!"
             })
         }
         
-        const post = await Post.findById(req.params.id);
+        const post = await Post.findById(req.params.id);  //  
         if(!post) return res.status(404).json({
             message:"post not found...!"
         })

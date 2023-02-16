@@ -1,33 +1,34 @@
-const User = require("../models/User")
-const Post = require("../models/Post")
-const cloudinary = require("cloudinary")
+const User = require("../models/User") // the schema "User"
+const Post = require("../models/Post") // the schema "Post"
+const cloudinary = require("cloudinary") // for uploading the images in cloud...
 
 exports.register = async(req, res) =>{
     try {
-        const {name, userName, image, password} = req.body;
+        const {name, userName, image, password} = req.body; //  getting the data to register...
 
-        const prevUser = await User.findOne({userName});
+        const prevUser = await User.findOne({userName}); //  checking if prev user is there with this userName..
         if(prevUser)
             return res.status(401).json({
                 message:"userName not available...!"
             })
 
-        let newCloud;
-        if(image){
+        let newCloud;  //  handling coudinary 
+        if(image){ // cunstom image..
             newCloud = await cloudinary.v2.uploader.upload(image, {
                 folder:"FunMedia_Users"
             })
         }
-        else{
+        else{ // for default image...
             newCloud = {
                 public_id:"funmedia_users/default_avatar_xlauux",
                 url:"https://res.cloudinary.com/dtgj7lwpa/image/upload/v1663670301/funmedia_users/default_avatar_xlauux.png"
             }
         }
-
+        // handling the date for joinDate property ...
         let time = new Date(Date.now());
         const joinDate = time.getDate() + "." + (time.getMonth()+1) + "." + time.getFullYear();
 
+        //  creating the User object with all the data !!
         const user = await User.create({
             name:name,
             userName:userName,
@@ -39,6 +40,7 @@ exports.register = async(req, res) =>{
             joinDate:joinDate
         })
 
+        //  generating the token for user & logging in at the same time..
         const token = await user.generateToken();
         const options = {
             expires:new Date(Date.now() + 20*24*36*36),
@@ -58,27 +60,27 @@ exports.register = async(req, res) =>{
 
 exports.login = async(req, res) =>{
     try {
-        const {userName, password} = req.body;
+        const {userName, password} = req.body;  //  getting data from request
 
-        const user = await User.findOne({userName}).select("+password");
+        const user = await User.findOne({userName}).select("+password");  //  fetching the user with the userName
 
         if(!user)
             return res.status(401).json({
                 message:"User not found...!"
             })
 
-        const check = await user.matchPassword(password);
+        const check = await user.matchPassword(password); //  matching the password with the function...
         if(!check)
             return res.status(400).json({
                 message:"Wrong password...!"
             })
         
-        const token = await user.generateToken();
+        const token = await user.generateToken(); //  generating the token after logging in...
         const options = {
             expires:new Date(Date.now() + 20*24*60*60*1000),
             httpOnly:true
         }
-
+        // logging done...
         res.status(201).cookie("token", token, options).json({
             message:"Logged in...!",
             user
@@ -92,9 +94,9 @@ exports.login = async(req, res) =>{
 
 exports.loadUser = async(req, res) =>{
     try {
-        const user = await User.findById(req.user._id).populate("followers followings");
+        const user = await User.findById(req.user._id).populate("followers followings");  //  fetching the user by id...
 
-        res.status(200).json({
+        res.status(200).json({ //  sending as Json
             message: "User loaded successfully !",
             user
         })
@@ -108,6 +110,7 @@ exports.loadUser = async(req, res) =>{
 
 exports.logout = async(req, res) =>{
     try {
+        // logging out, so token will be null in cookies..
         const options = {
             expires: new Date(Date.now()),
             httpOnly: true
@@ -125,9 +128,10 @@ exports.logout = async(req, res) =>{
 
 exports.updateUser = async(req, res) =>{
     try {
-        const user = await User.findById(req.user._id).select("+password");
-        const {name, image, password} = req.body;
+        const {name, image, password} = req.body;  //  getting the data for updation...
+        const user = await User.findById(req.user._id).select("+password");  ///  fetching the user along with the password
 
+        //  updating details one by one...
         if(name){
             user.name = name;
         }
@@ -135,6 +139,7 @@ exports.updateUser = async(req, res) =>{
             user.password = password;
         }
         if(image){
+            //  for default image..
             if(user.image.public_id != "funmedia_users/default_avatar_xlauux"){
                 await cloudinary.v2.uploader.destroy(user.image.public_id);
             }
@@ -147,7 +152,7 @@ exports.updateUser = async(req, res) =>{
             }
         }
 
-        await user.save();
+        await user.save();  //  saving the user in db after operation..
 
         res.status(200).json({
             message:"details updated...!"
@@ -161,8 +166,8 @@ exports.updateUser = async(req, res) =>{
 
 exports.findUser = async(req, res) =>{
     try {
+         //  fetching the user with id and populating the objects..
         const foundUser = await User.findById(req.params.id).populate("followers followings posts posts.owner");
-        // console.log("user is",foundUser);
 
         if(foundUser == null){
             return res.status(401).json({
@@ -170,8 +175,9 @@ exports.findUser = async(req, res) =>{
             })
         }
 
-        const allPosts = await Post.find().populate("likes comments.user");
+        const allPosts = await Post.find().populate("likes comments.user"); //  finding all the posts..
 
+        //  filtering the posts which belong to this user..
         let userPosts =[];
         allPosts.forEach(item =>{
             if(item.owner.toString() == foundUser._id.toString()){
@@ -179,8 +185,8 @@ exports.findUser = async(req, res) =>{
             }
         })
         
-        foundUser.posts = userPosts;
-        res.status(200).json({
+        foundUser.posts = userPosts; // setting the posts array in thi user's posts attribute..
+        res.status(200).json({ //  sent as Json
             message:"user finded...!",
             foundUser
         })
@@ -193,8 +199,8 @@ exports.findUser = async(req, res) =>{
 
 exports.getAllUsers = async(req, res) =>{
     try{
-        const allUsers = await User.find();
-
+        const allUsers = await User.find(); //  finding all the user in DB
+        //  sorting in random order...
         allUsers.sort((a, b) => {
             return Math.random() - 0.4;
         })
@@ -210,13 +216,14 @@ exports.getAllUsers = async(req, res) =>{
     }
 }
 
+// most complicated part...! 
 exports.deleteUser = async(req, res) =>{
     try {
-        const user = await User.findById(req.user._id).select("+password");
-        const {password} = req.body;
+        const user = await User.findById(req.user._id).select("+password");  //  fetching the user along with selecting the password
+        const {password} = req.body; //  we need the password for deletion..
         
-        const match = await user.matchPassword(password);
-        if(match == false){
+        const match = await user.matchPassword(password); // matching
+        if(match == false){ //  return as the passwords doesn't match..
             return res.status(401).json({
                 message:"wrong password...!"
             })
@@ -268,7 +275,7 @@ exports.deleteUser = async(req, res) =>{
                 }
             }
 
-            await allPosts[i].save();
+            await allPosts[i].save(); //  saving the post
         }
         // making the cookie null...
         const option ={
@@ -290,8 +297,8 @@ exports.deleteUser = async(req, res) =>{
 
 exports.followUnfollow = async(req, res) =>{
     try {
-        const user = await User.findById(req.user._id);
-        const targetUser = await User.findById(req.params.id);
+        const user = await User.findById(req.user._id); // current USer...
+        const targetUser = await User.findById(req.params.id); // User to follow-unfollow...
 
         if(!targetUser){
             return res.status(401).json({
@@ -301,18 +308,18 @@ exports.followUnfollow = async(req, res) =>{
         let index = targetUser.followers.indexOf(user._id);
 
         let msg;
-        if(index == -1){
+        if(index == -1){ // not followed yet !
             user.followings.push(req.params.id);
             targetUser.followers.push(user._id);
             msg = "user followed...!"
         }
-        else{
+        else{  //  allready followed...
             targetUser.followers.splice(index, 1);
             index = user.followings.indexOf(req.params.id);
             user.followings.splice(index, 1);            
             msg = "user unfollowed...!"
         }
-
+        //  saving both the user..
         await user.save();
         await targetUser.save();
 

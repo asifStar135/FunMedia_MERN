@@ -4,6 +4,8 @@ const {authenticate} = require("../middleware/authenticate");
 
 const Router = express.Router();
 
+//   here all the routes are added where the API requests will be called for User Operations...
+
 Router.route("/account/register").post(register);
 Router.route("/account/login").post(login);
 Router.route("/account/logout").put(authenticate, logout);

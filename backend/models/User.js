@@ -2,6 +2,8 @@ const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken")
 const bcrypt = require("bcrypt")
 
+//  declaration of the object "User" and all it's properties... along with conditions...
+
 const User = new mongoose.Schema({
     name:{
         type:String,

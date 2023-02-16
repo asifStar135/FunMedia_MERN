@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
 
+//  declaration of the object "Post" and all it's properties... along with conditions...
+
 const Post = new mongoose.Schema({
     image:{
         url:String,

@@ -1,5 +1,5 @@
 const mongoose = require("mongoose")
-
+// FUNCTION TO CONNECT THE MONGODB SERVER...
 
 exports.connectDb = async ()=>{
     try {
