@@ -23,6 +23,8 @@ const Home = () => {
     fn();
   },[dispatch])
 
+  const ar = [1,2,3];
+
   return (
     (loading || userLoading) ? <Loader/> :
       <div className="home d-flex justify-content-around">
@@ -41,13 +43,13 @@ const Home = () => {
         </div>
 
         <Card className='right d-flex flex-col'>
-          {
+          { allPosts?.length > 0  ? 
             allPosts?.map((item) =>(
               <Post
               key={item?._id}
               postItem={item}
               />
-            ))
+            )) : <h1 className='noPost'>There are not Post to show...!</h1>
           }
         </Card>
       </div>

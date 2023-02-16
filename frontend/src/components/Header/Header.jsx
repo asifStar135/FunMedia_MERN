@@ -15,7 +15,7 @@ const Header = () => {
         <Navbar key='md' bg="dark" fixed='top' expand="md" className="mb-3">
             <Container fluid>
                 <Navbar.Brand as={NavLink} to="/" className='d-flex align-items-center' onClick={()=> setTab("/")}>
-                    <img src="./fav.png" className='logo-img'/>
+                    <img src="./logo.png" className='logo-img'/>
                     <div className="heading">
                         <span className='r'>Fu</span><span className='b'>nM</span><span className='g'>ed</span><span className='y'>ia</span>
                     </div>

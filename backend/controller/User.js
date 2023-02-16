@@ -13,7 +13,7 @@ exports.register = async(req, res) =>{
             })
 
         let newCloud;  //  handling coudinary 
-        if(image){ // cunstom image..
+        if(image){ // custom image..
             newCloud = await cloudinary.v2.uploader.upload(image, {
                 folder:"FunMedia_Users"
             })
@@ -38,7 +38,7 @@ exports.register = async(req, res) =>{
             },
             password:password,
             joinDate:joinDate
-        })
+        });
 
         //  generating the token for user & logging in at the same time..
         const token = await user.generateToken();
@@ -80,6 +80,7 @@ exports.login = async(req, res) =>{
             expires:new Date(Date.now() + 20*24*60*60*1000),
             httpOnly:true
         }
+        
         // logging done...
         res.status(201).cookie("token", token, options).json({
             message:"Logged in...!",
